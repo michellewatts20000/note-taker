@@ -16,7 +16,11 @@ let testArray = [
   {
   "title": "Test Title",
   "text": "Test text"
-  }
+  },
+  {
+    "title": "Test Title",
+    "text": "Test text"
+    }
 ]
 
 const notesDB = path.join(__dirname, 'db', 'db.json');
@@ -37,12 +41,12 @@ const notesDB = path.join(__dirname, 'db', 'db.json');
     //   res.sendFile(path.join(__dirname, 'public', 'index.html'));
     // });
 
-    app.get('/api/notes', function(req, res) {
-      fs.readFile(notesDB, (err, data) => {
-        // const currentNotes = handleNoteView(err, data);
-        res.json(testArray);
+    app.get("/api/notes", (req, res) => {
+      fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", (err, data) => {
+          if (err) throw err;
+          res.json(JSON.parse(data));
       });
-    });
+  });
 
     // app.get('/api/notes', (req, res) => res.json(testArray));
 
