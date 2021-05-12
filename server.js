@@ -37,9 +37,9 @@ const notesDB = path.join(__dirname, 'db', 'db.json');
     });
   
     // If no matching route is found default to home
-    // app.get('*', (req, res) => {
-    //   res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    // });
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
 
     app.get("/api/notes", (req, res) => {
       fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", (err, data) => {
@@ -47,6 +47,35 @@ const notesDB = path.join(__dirname, 'db', 'db.json');
           res.json(JSON.parse(data));
       });
   });
+
+
+  app.post("/api/notes", (req, res) => {
+    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", (err, data) => {
+        if (err) throw err;
+        const db = JSON.parse(data);
+        const newDB = [];
+
+        db.push(req.body);
+
+        for (let i = 0; i < db.length; i++)
+        {
+            const newNote = {
+                title: db[i].title,
+                text: db[i].text,
+                id: i
+            };
+
+            newDB.push(newNote);
+        }
+
+        fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(newDB, null, 2), (err) => {
+            if (err) throw err;
+            res.json(req.body);
+        });
+    });
+});
+
+
 
     // app.get('/api/notes', (req, res) => res.json(testArray));
 
