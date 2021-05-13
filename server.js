@@ -27,8 +27,9 @@ app.get("/api/notes", (req, res) => {
 app.post("/api/notes", (req, res) => {
   fs.readFile(notesDB, 'utf8', function (err, storedNotes) {
     if (err) throw err;
-
+    console.log(storedNotes)
     storedNotes = JSON.parse(storedNotes)
+    console.log(storedNotes)
     var id = uuidv4();
     var newNote = {
       title: req.body.title.trim(),
@@ -37,29 +38,25 @@ app.post("/api/notes", (req, res) => {
     }
     var noteCombo = storedNotes.concat(newNote)
 
-    fs.writeFile(notesDB, JSON.stringify(noteCombo, null, 2), function (error, data) {
+    fs.writeFile(notesDB, JSON.stringify(noteCombo, null, 2), function (err, data) {
       if (err) throw err;
-      console.log(noteCombo)
-      res.json(noteCombo);
+      console.log(data)
+      res.json(data);
     })
   })
 })
 
 
 app.delete("/api/notes/:id", (req, res) => {
-
-  console.log(req.params.id)
-  console.log(req.params.title)
+  const idArray = req.params.id;
   console.log(req.params.id)
   fs.readFile(notesDB, 'utf8', function (err, storedNotes) {
     if (err) throw err;
     storedNotes = JSON.parse(storedNotes)
-    const fliteredArray = storedNotes.filter(i => i.id !== req.params.id)
-    console.log(fliteredArray);
+    const fliteredArray = storedNotes.filter(i => i.id !== idArray)
 
-    fs.writeFile(notesDB, JSON.stringify(fliteredArray, null, 2), function (error, data) {
+    fs.writeFile(notesDB, JSON.stringify(fliteredArray, null, 2), function (err, data) {
       if (err) throw err;
-      console.log(data)
       res.json(data);
     })
   });
@@ -80,13 +77,10 @@ app.get('/notes', (req, res) => {
 
 // If no matching route is found default to home
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/index.html"), function (err) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'), function (err) {
     if (err) throw err;
   });
 });
-
-
-
 
 
 // listening on port 8080
