@@ -18,7 +18,7 @@
   run 'npm i'
 
   ## Usage
-  To run locally'node server'. To use the deployed app go here: https://hidden-sands-80026.herokuapp.com/notes
+  To run locally 'node server'. To use the deployed app go here: https://hidden-sands-80026.herokuapp.com/notes
 
   ## Screenshot 
   ![screenshot](./public/assets/img/screenshot1.png)
