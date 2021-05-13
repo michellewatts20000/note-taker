@@ -27,12 +27,16 @@ app.get("/api/notes", (req, res) => {
 app.post("/api/notes", (req, res) => {
   fs.readFile(notesDB, 'utf8', function (err, storedNotes) {
     if (err) throw err;
-  
+
     storedNotes = JSON.parse(storedNotes)
     var id = uuidv4();
-    var newNote = { title: req.body.title.trim(), text: req.body.text.trim(), id: id }
+    var newNote = {
+      title: req.body.title.trim(),
+      text: req.body.text.trim(),
+      id: id
+    }
     var noteCombo = storedNotes.concat(newNote)
-    
+
     fs.writeFile(notesDB, JSON.stringify(noteCombo, null, 2), function (error, data) {
       if (err) throw err;
       console.log(noteCombo)
@@ -42,11 +46,22 @@ app.post("/api/notes", (req, res) => {
 })
 
 
-app.delete("/api/notes", (req, res) => {
+app.delete("/api/notes/:id", (req, res) => {
+
+  console.log(req.params.id)
+  console.log(req.params.title)
+  console.log(req.params.id)
   fs.readFile(notesDB, 'utf8', function (err, storedNotes) {
     if (err) throw err;
-    var element = event.target;
-console.log(event);
+    storedNotes = JSON.parse(storedNotes)
+    const fliteredArray = storedNotes.filter(i => i.id !== req.params.id)
+    console.log(fliteredArray);
+
+    fs.writeFile(notesDB, JSON.stringify(fliteredArray, null, 2), function (error, data) {
+      if (err) throw err;
+      console.log(data)
+      res.json(data);
+    })
   });
 });
 
