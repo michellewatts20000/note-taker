@@ -22,6 +22,7 @@
 
   ## Screenshot 
   ![screenshot](./public/assets/img/screenshot1.png)
+    ![screenshot](./public/assets/img/screenshot2.png)
 
   ## Contribute
   Send me an email: watts.e.michelle@gmail.com
