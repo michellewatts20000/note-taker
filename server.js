@@ -23,7 +23,7 @@ app.use(express.json());
 // shortcut to db.json file
 const notesDB = path.join(__dirname, 'db', 'db.json');
 
-// get the data in the db file
+// GETs the data in the db file
 app.get("/api/notes", (req, res) => {
   fs.readFile(notesDB, (err, data) => {
     if (err) throw err;
@@ -31,7 +31,7 @@ app.get("/api/notes", (req, res) => {
   });
 });
 
-// post request, reads existing notes and writes current note to db.JSON file when person clicks save icon
+// POST request, reads existing notes and writes current note to db.JSON file when person clicks save icon
 app.post("/api/notes", (req, res) => {
   fs.readFile(notesDB, 'utf8', function (err, storedNotes) {
     if (err) throw err;
